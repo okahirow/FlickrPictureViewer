@@ -9,6 +9,7 @@
 #import "ThumbnailListVC.h"
 #import "FlickrManager.h"
 #import "ThumbnailCell.h"
+#import "DetailVC.h"
 
 @interface ThumbnailListVC ()
 
@@ -74,15 +75,14 @@
     }];
 }
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    
 }
-*/
+
 
 #pragma mark <UICollectionViewDataSource>
 
@@ -126,6 +126,11 @@
     else {
         // thumbnail cell
         // Go to detali screen.
+        DetailVC* detailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailVC"];
+        detailVC.pictureList = self.pictureList;
+        detailVC.initialPictureIndex = indexPath.row;
+        
+        [self.navigationController pushViewController:detailVC animated:YES];
     }
 }
 

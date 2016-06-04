@@ -11,6 +11,9 @@
 
 @interface ThumbnailCell ()
 
+@property (nonatomic, weak) IBOutlet UIImageView* imageView;
+@property (nonatomic, weak) IBOutlet UIView* defaultView;
+
 @property Picture* displayTargetPicture;
 
 @end
@@ -34,7 +37,7 @@
     
     // Set loading status
     self.imageView.image = nil;
-    self.backgroundColor = [UIColor lightGrayColor];
+    self.defaultView.hidden = NO;
     
     // retrieve thumbnail
     [[FlickrManager sharedInstance] retrieveImageOfPicture:picture isThumbnail:YES completion:
@@ -66,7 +69,7 @@
         
         // Set loaded status
         self.imageView.image = image;
-        self.backgroundColor = [UIColor clearColor];
+        self.defaultView.hidden = YES;
     }];
 }
 

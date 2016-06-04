@@ -11,7 +11,6 @@
 
 @interface ThumbnailCell : UICollectionViewCell
 
-@property (nonatomic, weak) IBOutlet UIImageView* imageView;
  
 - (void)displayPicture:(Picture*)picture;
 
