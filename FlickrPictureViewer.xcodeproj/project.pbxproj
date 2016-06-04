@@ -12,6 +12,8 @@
 		454299E51D03176C00880D4F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 454299E31D03176C00880D4F /* Main.storyboard */; };
 		454299E71D03176C00880D4F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 454299E61D03176C00880D4F /* Assets.xcassets */; };
 		454299EA1D03176C00880D4F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 454299E81D03176C00880D4F /* LaunchScreen.storyboard */; };
+		45E7EE5C1D031ECD009E6C46 /* ThumbnailListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E7EE5B1D031ECD009E6C46 /* ThumbnailListVC.m */; };
+		45E7EE611D032115009E6C46 /* PictureTypeListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E7EE601D032115009E6C46 /* PictureTypeListVC.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +25,11 @@
 		454299E61D03176C00880D4F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		454299E91D03176C00880D4F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		454299EB1D03176C00880D4F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		45E7EE5A1D031ECD009E6C46 /* ThumbnailListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThumbnailListVC.h; sourceTree = "<group>"; };
+		45E7EE5B1D031ECD009E6C46 /* ThumbnailListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThumbnailListVC.m; sourceTree = "<group>"; };
+		45E7EE5F1D032115009E6C46 /* PictureTypeListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PictureTypeListVC.h; sourceTree = "<group>"; };
+		45E7EE601D032115009E6C46 /* PictureTypeListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PictureTypeListVC.m; sourceTree = "<group>"; };
+		45E7EE631D032260009E6C46 /* Defines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Defines.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,10 +64,9 @@
 			children = (
 				454299DD1D03176C00880D4F /* AppDelegate.h */,
 				454299DE1D03176C00880D4F /* AppDelegate.m */,
-				454299E31D03176C00880D4F /* Main.storyboard */,
-				454299E61D03176C00880D4F /* Assets.xcassets */,
-				454299E81D03176C00880D4F /* LaunchScreen.storyboard */,
-				454299EB1D03176C00880D4F /* Info.plist */,
+				45E7EE5E1D0320D3009E6C46 /* ViewControllers */,
+				45E7EE621D03223E009E6C46 /* Utils */,
+				45E7EE5D1D031EDB009E6C46 /* Resources */,
 				454299DA1D03176C00880D4F /* Supporting Files */,
 			);
 			path = FlickrPictureViewer;
@@ -72,6 +78,36 @@
 				454299DB1D03176C00880D4F /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		45E7EE5D1D031EDB009E6C46 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				454299E31D03176C00880D4F /* Main.storyboard */,
+				454299E61D03176C00880D4F /* Assets.xcassets */,
+				454299E81D03176C00880D4F /* LaunchScreen.storyboard */,
+				454299EB1D03176C00880D4F /* Info.plist */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		45E7EE5E1D0320D3009E6C46 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				45E7EE5F1D032115009E6C46 /* PictureTypeListVC.h */,
+				45E7EE601D032115009E6C46 /* PictureTypeListVC.m */,
+				45E7EE5A1D031ECD009E6C46 /* ThumbnailListVC.h */,
+				45E7EE5B1D031ECD009E6C46 /* ThumbnailListVC.m */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		45E7EE621D03223E009E6C46 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				45E7EE631D032260009E6C46 /* Defines.h */,
+			);
+			name = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -105,6 +141,7 @@
 				TargetAttributes = {
 					454299D61D03176C00880D4F = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = 97Y9MFFBR9;
 					};
 				};
 			};
@@ -144,6 +181,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45E7EE5C1D031ECD009E6C46 /* ThumbnailListVC.m in Sources */,
+				45E7EE611D032115009E6C46 /* PictureTypeListVC.m in Sources */,
 				454299DF1D03176C00880D4F /* AppDelegate.m in Sources */,
 				454299DC1D03176C00880D4F /* main.m in Sources */,
 			);
@@ -259,10 +298,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = FlickrPictureViewer/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = jp.oka.hirow.app.FlickrPictureViewer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -270,10 +313,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = FlickrPictureViewer/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = jp.oka.hirow.app.FlickrPictureViewer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
@@ -296,6 +343,7 @@
 				454299F01D03176C00880D4F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
