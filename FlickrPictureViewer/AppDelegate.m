@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "FlickrManager.h"
 
 @interface AppDelegate ()
 

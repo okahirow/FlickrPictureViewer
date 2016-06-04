@@ -23,8 +23,10 @@
 
 // Retrieve thumbnail image from Flicker.
 // If cached image exists in local, it will be returned without retrieving from Flickr.
-// If retreaving succeeded, completion will return image.
-// If retreaving failed, completion will return error and image will be nil.
-- (void)retrieveThumbnailImageOfPicture:(Picture*)picture completion:(void(^)(Picture* requestedPicture, UIImage* image, NSError* error))completion;
+// If retreaving succeeded, completion will return image file path.
+// If retreaving failed, completion will return error and image file path will be nil.
+- (void)retrieveImageOfPicture:(Picture*)picture isThumbnail:(BOOL)isThumbnail completion:(void(^)(NSString* imageFilePath, NSError* error))completion;
+
+- (void)deleteAllCacheFile;
 
 @end

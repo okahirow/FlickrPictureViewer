@@ -32,31 +32,41 @@
     
     self.displayTargetPicture = picture;
     
-    // set loading status
+    // Set loading status
     self.imageView.image = nil;
+    self.backgroundColor = [UIColor lightGrayColor];
     
     // retrieve thumbnail
-    [[FlickrManager sharedInstance] retrieveThumbnailImageOfPicture:picture completion:
-    ^(Picture* requestedPicture, UIImage* image, NSError* error) {
+    [[FlickrManager sharedInstance] retrieveImageOfPicture:picture isThumbnail:YES completion:
+    ^(NSString* imageFilePath, NSError* error) {
         if (error != nil) {
             // failed.
             // TODO: show error
             return;
         }
         
+        if (imageFilePath == nil) {
+            // error
+            // TODO: show error
+            return;
+        }
+        
+        if ([picture isEqual:self.displayTargetPicture] == false) {
+            // Now this cell is displayed another picture.
+            // Nothing to do.
+            return;
+        }
+        
+        UIImage *image = [UIImage imageWithContentsOfFile:imageFilePath];
         if (image == nil) {
             // error
             // TODO: show error
             return;
         }
         
-        if ([requestedPicture isEqual:self.displayTargetPicture] == false) {
-            // Now this cell is for another picture.
-            // Nothing to do.
-            return;
-        }
-        
+        // Set loaded status
         self.imageView.image = image;
+        self.backgroundColor = [UIColor clearColor];
     }];
 }
 

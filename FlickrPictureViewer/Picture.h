@@ -10,6 +10,13 @@
 
 @interface Picture : NSObject
 
+@property NSString* pictureId;
+@property NSString* farm;
+@property NSString* server;
+@property NSString* secret;
+
+- (id)initWithJsonData:(NSDictionary*)json;
+
 - (BOOL)isEqual:(Picture*)picture;
 
 @end
