@@ -39,6 +39,7 @@
 		45E7EE6A1D033CC9009E6C46 /* FlickrManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlickrManager.m; sourceTree = "<group>"; };
 		45E7EE6D1D034871009E6C46 /* ThumbnailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThumbnailCell.h; sourceTree = "<group>"; };
 		45E7EE6E1D034871009E6C46 /* ThumbnailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThumbnailCell.m; sourceTree = "<group>"; };
+		45E7EE701D034C38009E6C46 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +100,7 @@
 				454299E61D03176C00880D4F /* Assets.xcassets */,
 				454299E81D03176C00880D4F /* LaunchScreen.storyboard */,
 				454299EB1D03176C00880D4F /* Info.plist */,
+				45E7EE701D034C38009E6C46 /* Podfile */,
 			);
 			name = Resources;
 			sourceTree = "<group>";

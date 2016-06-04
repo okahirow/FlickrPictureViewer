@@ -8,16 +8,23 @@
 
 #import <Foundation/Foundation.h>
 #import "Defines.h"
+#import "Picture.h"
 
 @interface FlickrManager : NSObject
 
 + (instancetype)sharedInstance;
 
 // Retrieve picture list from Flicker.
-// Max 50 pictures will be retrieved.
+// Specified count of pictures will be retrieved.
 // If retreaving succeeded, completion will return pictureList as array of Picture object.
 // If retreaving failed, completion will return error and pictureList will be nil.
-- (void)retrievePictureListWithType:(PictureListType)type completion:(void(^)(NSArray* pictureList, NSError* error))completion;
+- (void)retrievePictureListWithType:(PictureListType)type count:(NSUInteger)count completion:(void(^)(NSArray* pictureList, NSError* error))completion;
 
+
+// Retrieve thumbnail image from Flicker.
+// If cached image exists in local, it will be returned without retrieving from Flickr.
+// If retreaving succeeded, completion will return image.
+// If retreaving failed, completion will return error and image will be nil.
+- (void)retrieveThumbnailImageOfPicture:(Picture*)picture completion:(void(^)(UIImage* image, NSError* error))completion;
 
 @end

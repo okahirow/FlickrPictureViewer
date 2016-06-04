@@ -50,7 +50,7 @@
 }
 
 - (void)retrievePictureList {
-    [self.flickrManager retrievePictureListWithType:self.pictureListType completion:
+    [self.flickrManager retrievePictureListWithType:self.pictureListType count:50 completion:
     ^(NSArray* pictureList, NSError* error){
         if (error != nil) {
             // failed.
