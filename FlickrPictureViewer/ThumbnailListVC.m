@@ -7,19 +7,13 @@
 //
 
 #import "ThumbnailListVC.h"
-
-
-typedef NS_ENUM (NSUInteger, ThumbnailListStatus) {
-    Loading,
-    LoadedAndMoreDataExists,
-    LoadedAndNoMoreData,
-};
-
+#import "FlickrManager.h"
+#import "ThumbnailCell.h"
 
 @interface ThumbnailListVC ()
 
-@property ThumbnailListStatus status;
-@property NSMutableArray* pictureList;
+@property NSArray* pictureList;
+@property FlickrManager* flickrManager;
 
 @end
 
@@ -33,7 +27,8 @@ typedef NS_ENUM (NSUInteger, ThumbnailListStatus) {
     self.collectionView.alwaysBounceVertical = YES;
     self.clearsSelectionOnViewWillAppear = NO;
     
-    self.pictureList = [@[] mutableCopy];
+    self.flickrManager = [FlickrManager sharedInstance];
+    self.pictureList = nil; // nil means not yet retrieved.
     [self updateNavigationTitle];
     [self retrievePictureList];
 }
@@ -55,9 +50,28 @@ typedef NS_ENUM (NSUInteger, ThumbnailListStatus) {
 }
 
 - (void)retrievePictureList {
-    self.status = Loading;
-    
-    
+    [self.flickrManager retrievePictureListWithType:self.pictureListType completion:
+    ^(NSArray* pictureList, NSError* error){
+        if (error != nil) {
+            // failed.
+            // TODO: show error
+            return;
+        }
+        
+        if (pictureList == nil) {
+            // error
+            // TODO: show error
+            return;
+        }
+        
+        if (pictureList.count == 0) {
+            // error
+            // TODO: show error
+        }
+        
+        self.pictureList = pictureList;
+        [self.collectionView reloadData];
+    }];
 }
 
 /*
@@ -78,53 +92,40 @@ typedef NS_ENUM (NSUInteger, ThumbnailListStatus) {
 
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    switch (self.status) {
-        case Loading:
-            return self.pictureList.count + 1;  // + 1 is for loading cell
-        case LoadedAndMoreDataExists:
-            return self.pictureList.count + 1;  // + 1 is for see more cell
-        case LoadedAndNoMoreData:
-            return self.pictureList.count;
+    if (self.pictureList == nil) {
+        // loading
+        return 1;   // loading cell
+    }
+    else {
+        // loaded
+        return self.pictureList.count;
     }
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    UICollectionViewCell *cell;
-    
-    if (indexPath.row < self.pictureList.count) {
-        // thumbnail cell
-        cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ThumbnailCell" forIndexPath:indexPath];
+    if (self.pictureList == nil) {
+        // loading
+        return [collectionView dequeueReusableCellWithReuseIdentifier:@"LoadingCell" forIndexPath:indexPath];
     }
     else {
-        if (self.status == Loading) {
-            // loading cell
-            cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"LoadingCell" forIndexPath:indexPath];
-        }
-        else {
-            // see more cell
-            cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"SeeMoreCell" forIndexPath:indexPath];
-        }
+        // thumbnail cell
+        ThumbnailCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ThumbnailCell" forIndexPath:indexPath];
+        Picture* picture = self.pictureList[indexPath.row];
+        [cell displayPicture:picture];
+        return cell;
     }
-    
-    return cell;
 }
 
 #pragma mark <UICollectionViewDelegate>
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row < self.pictureList.count) {
-        // thumbnail cell
-        // Go to detali screen.
+    if (self.pictureList == nil) {
+        // loading
+        // Do nothing.
     }
     else {
-        if (self.status == Loading) {
-            // loading cell
-            // Do nothing.
-        }
-        else {
-            // see more cell
-            // Retrieve picture list.
-        }
+        // thumbnail cell
+        // Go to detali screen.
     }
 }
 
