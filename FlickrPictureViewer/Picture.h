@@ -10,4 +10,6 @@
 
 @interface Picture : NSObject
 
+- (BOOL)isEqual:(Picture*)picture;
+
 @end

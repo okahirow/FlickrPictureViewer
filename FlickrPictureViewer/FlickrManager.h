@@ -6,7 +6,7 @@
 //  Copyright © 2016年 Hiromitsu Oka. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 #import "Defines.h"
 #import "Picture.h"
 
@@ -25,6 +25,6 @@
 // If cached image exists in local, it will be returned without retrieving from Flickr.
 // If retreaving succeeded, completion will return image.
 // If retreaving failed, completion will return error and image will be nil.
-- (void)retrieveThumbnailImageOfPicture:(Picture*)picture completion:(void(^)(UIImage* image, NSError* error))completion;
+- (void)retrieveThumbnailImageOfPicture:(Picture*)picture completion:(void(^)(Picture* requestedPicture, UIImage* image, NSError* error))completion;
 
 @end

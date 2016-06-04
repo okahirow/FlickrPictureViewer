@@ -37,7 +37,7 @@
     
     // retrieve thumbnail
     [[FlickrManager sharedInstance] retrieveThumbnailImageOfPicture:picture completion:
-    ^(UIImage* image, NSError* error) {
+    ^(Picture* requestedPicture, UIImage* image, NSError* error) {
         if (error != nil) {
             // failed.
             // TODO: show error
@@ -47,6 +47,12 @@
         if (image == nil) {
             // error
             // TODO: show error
+            return;
+        }
+        
+        if ([requestedPicture isEqual:self.displayTargetPicture] == false) {
+            // Now this cell is for another picture.
+            // Nothing to do.
             return;
         }
         
