@@ -12,6 +12,7 @@
 
 @interface FlickrManager : NSObject
 
+// Singleton
 + (instancetype)sharedInstance;
 
 // Retrieve picture list from Flicker.
