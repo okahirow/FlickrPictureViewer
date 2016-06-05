@@ -9,10 +9,11 @@
 #import "PicturePageVC.h"
 #import "FlickrManager.h"
 
-@interface PicturePageVC ()
+@interface PicturePageVC () <UIScrollViewDelegate>
 
-@property (nonatomic, weak) IBOutlet UIImageView* imageView;
+@property (nonatomic, weak) IBOutlet UIScrollView* scrollView;
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView* loadingView;
+@property UIImageView* imageView;
 
 @end
 
@@ -22,7 +23,32 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    // Set image view into scroll view.
+    self.imageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
+    self.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    [self.scrollView addSubview:self.imageView];
+    self.scrollView.contentSize = self.imageView.bounds.size;
+    self.scrollView.delegate = self;
+    
     [self displayPicture:self.targetPicture];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    
+    // Reset zoom mode
+    [self.scrollView setZoomScale:1.0];
+}
+
+- (void)updateViewConstraints {
+    [super updateViewConstraints];
+    
+    // Reset zoom mode
+    [self.scrollView setZoomScale:1.0];
+    
+    // Reset imageView layout
+    self.imageView.frame = self.view.bounds;
+    self.scrollView.contentSize = self.imageView.bounds.size;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -76,6 +102,13 @@
     
     self.imageView.image = image;
     self.loadingView.hidden = YES;
+}
+
+
+#pragma mark <UIScrollViewDelegate>
+
+- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
+    return self.imageView;
 }
 
 

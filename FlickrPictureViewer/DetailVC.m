@@ -64,6 +64,39 @@
     self.title = [NSString stringWithFormat:@"%lu/%lu", currentVC.pageIndex + 1, (unsigned long)self.pictureList.count];
 }
 
+- (IBAction)didTapScreen {
+    [self toggleNavigationBar];
+}
+
+- (void)toggleNavigationBar {
+    if (self.navigationController.navigationBarHidden) {
+        [self.navigationController setNavigationBarHidden:NO];
+    }
+    else {
+        [self.navigationController setNavigationBarHidden:YES];
+    }
+    
+    [self setNeedsStatusBarAppearanceUpdate];
+}
+
+- (BOOL)prefersStatusBarHidden {
+    // If iPhone landscape, status bar should not display.
+    BOOL shouldHideStatusBar = [super prefersStatusBarHidden];
+    
+    if (self.navigationController.navigationBarHidden) {
+        return YES;
+    }
+    else {
+        if (shouldHideStatusBar) {
+            return YES;
+        }
+        else {
+            return NO;
+        }
+    }
+}
+
+
 
 #pragma mark <UIPageViewControllerDelegate>
 
