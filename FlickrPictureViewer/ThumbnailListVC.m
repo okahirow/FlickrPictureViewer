@@ -13,6 +13,7 @@
 
 @interface ThumbnailListVC ()
 
+@property (nonatomic, weak) IBOutlet UISegmentedControl* segmentedControl;
 @property NSArray* pictureList;
 @property FlickrManager* flickrManager;
 
@@ -30,8 +31,10 @@
     
     self.flickrManager = [FlickrManager sharedInstance];
     self.pictureList = nil; // nil means not yet retrieved.
-    [self updateNavigationTitle];
-    [self retrievePictureList];
+    
+    // Set initial tab
+    self.segmentedControl.selectedSegmentIndex = 0;
+    [self segmentedControlDidChanged];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -39,20 +42,18 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)updateNavigationTitle {
-    switch (self.pictureListType) {
-        case PictureListTypeMostRecent:
-            self.title = @"Most recent pictures";
-            break;
-        case PictureListTypeMostInteresting:
-            self.title = @"Most interesting pictures";
-            break;
-    }
-}
-
-- (void)retrievePictureList {
-    [self.flickrManager retrievePictureListWithType:self.pictureListType count:100 completion:
+- (void)retrievePictureListWithType:(PictureListType)type {
+    self.pictureList = nil; // nil means not yet retrieved.
+    [self.collectionView reloadData];
+    
+    [self.flickrManager retrievePictureListWithType:type count:100 completion:
     ^(NSArray* pictureList, NSError* error){
+        if (type != [self getCurrentPictureListType]) {
+            // Now current tab is already changed.
+            // Nothing to do.
+            return;
+        }
+        
         if (error != nil || pictureList == nil) {
             // error
             UIAlertController* dialog = [UIAlertController alertControllerWithTitle:@"Error" message:@"Cannot retrieve picture list." preferredStyle: UIAlertControllerStyleAlert];
@@ -67,6 +68,14 @@
         
         [self.collectionView reloadData];
     }];
+}
+
+- (PictureListType) getCurrentPictureListType {
+    return self.segmentedControl.selectedSegmentIndex == 0 ? PictureListTypeMostRecent : PictureListTypeMostInteresting;
+}
+
+- (IBAction)segmentedControlDidChanged {
+    [self retrievePictureListWithType:[self getCurrentPictureListType]];
 }
 
 

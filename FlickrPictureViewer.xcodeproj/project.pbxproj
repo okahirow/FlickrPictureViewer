@@ -13,7 +13,6 @@
 		454299E71D03176C00880D4F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 454299E61D03176C00880D4F /* Assets.xcassets */; };
 		454299EA1D03176C00880D4F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 454299E81D03176C00880D4F /* LaunchScreen.storyboard */; };
 		45E7EE5C1D031ECD009E6C46 /* ThumbnailListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E7EE5B1D031ECD009E6C46 /* ThumbnailListVC.m */; };
-		45E7EE611D032115009E6C46 /* PictureTypeListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E7EE601D032115009E6C46 /* PictureTypeListVC.m */; };
 		45E7EE661D033BDD009E6C46 /* Picture.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E7EE651D033BDD009E6C46 /* Picture.m */; };
 		45E7EE6B1D033CC9009E6C46 /* FlickrManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E7EE6A1D033CC9009E6C46 /* FlickrManager.m */; };
 		45E7EE6F1D034871009E6C46 /* ThumbnailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E7EE6E1D034871009E6C46 /* ThumbnailCell.m */; };
@@ -33,8 +32,6 @@
 		454299EB1D03176C00880D4F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		45E7EE5A1D031ECD009E6C46 /* ThumbnailListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThumbnailListVC.h; sourceTree = "<group>"; };
 		45E7EE5B1D031ECD009E6C46 /* ThumbnailListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThumbnailListVC.m; sourceTree = "<group>"; };
-		45E7EE5F1D032115009E6C46 /* PictureTypeListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PictureTypeListVC.h; sourceTree = "<group>"; };
-		45E7EE601D032115009E6C46 /* PictureTypeListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PictureTypeListVC.m; sourceTree = "<group>"; };
 		45E7EE631D032260009E6C46 /* Defines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Defines.h; sourceTree = "<group>"; };
 		45E7EE641D033BDD009E6C46 /* Picture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Picture.h; sourceTree = "<group>"; };
 		45E7EE651D033BDD009E6C46 /* Picture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Picture.m; sourceTree = "<group>"; };
@@ -130,8 +127,6 @@
 		45E7EE5E1D0320D3009E6C46 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				45E7EE5F1D032115009E6C46 /* PictureTypeListVC.h */,
-				45E7EE601D032115009E6C46 /* PictureTypeListVC.m */,
 				45E7EE5A1D031ECD009E6C46 /* ThumbnailListVC.h */,
 				45E7EE5B1D031ECD009E6C46 /* ThumbnailListVC.m */,
 				45E7EE731D038C6B009E6C46 /* DetailVC.h */,
@@ -313,7 +308,6 @@
 				45E7EE661D033BDD009E6C46 /* Picture.m in Sources */,
 				45E7EE6B1D033CC9009E6C46 /* FlickrManager.m in Sources */,
 				45E7EE6F1D034871009E6C46 /* ThumbnailCell.m in Sources */,
-				45E7EE611D032115009E6C46 /* PictureTypeListVC.m in Sources */,
 				454299DF1D03176C00880D4F /* AppDelegate.m in Sources */,
 				454299DC1D03176C00880D4F /* main.m in Sources */,
 			);

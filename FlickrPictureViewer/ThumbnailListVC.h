@@ -11,8 +11,4 @@
 
 @interface ThumbnailListVC : UICollectionViewController
 
-
-// This property will be set by parent view controller.
-@property PictureListType pictureListType;
-
 @end
