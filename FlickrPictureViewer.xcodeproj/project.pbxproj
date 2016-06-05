@@ -18,6 +18,7 @@
 		45E7EE6B1D033CC9009E6C46 /* FlickrManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E7EE6A1D033CC9009E6C46 /* FlickrManager.m */; };
 		45E7EE6F1D034871009E6C46 /* ThumbnailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E7EE6E1D034871009E6C46 /* ThumbnailCell.m */; };
 		45E7EE751D038C6B009E6C46 /* DetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E7EE741D038C6B009E6C46 /* DetailVC.m */; };
+		45E7EE781D03D3A2009E6C46 /* PicturePageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E7EE771D03D3A2009E6C46 /* PicturePageVC.m */; };
 		6CE8F28D931296AAD8E60580 /* libPods-FlickrPictureViewer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E2CC0360DD99D7614F7F8AE /* libPods-FlickrPictureViewer.a */; };
 /* End PBXBuildFile section */
 
@@ -44,6 +45,8 @@
 		45E7EE721D035510009E6C46 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = SOURCE_ROOT; };
 		45E7EE731D038C6B009E6C46 /* DetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailVC.h; sourceTree = "<group>"; };
 		45E7EE741D038C6B009E6C46 /* DetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailVC.m; sourceTree = "<group>"; };
+		45E7EE761D03D3A2009E6C46 /* PicturePageVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PicturePageVC.h; sourceTree = "<group>"; };
+		45E7EE771D03D3A2009E6C46 /* PicturePageVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PicturePageVC.m; sourceTree = "<group>"; };
 		766235199398B3CC3B73D8E7 /* Pods-FlickrPictureViewer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlickrPictureViewer.release.xcconfig"; path = "Pods/Target Support Files/Pods-FlickrPictureViewer/Pods-FlickrPictureViewer.release.xcconfig"; sourceTree = "<group>"; };
 		7E2CC0360DD99D7614F7F8AE /* libPods-FlickrPictureViewer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FlickrPictureViewer.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFD76D953C0C934775AFD19D /* Pods-FlickrPictureViewer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlickrPictureViewer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FlickrPictureViewer/Pods-FlickrPictureViewer.debug.xcconfig"; sourceTree = "<group>"; };
@@ -133,6 +136,8 @@
 				45E7EE5B1D031ECD009E6C46 /* ThumbnailListVC.m */,
 				45E7EE731D038C6B009E6C46 /* DetailVC.h */,
 				45E7EE741D038C6B009E6C46 /* DetailVC.m */,
+				45E7EE761D03D3A2009E6C46 /* PicturePageVC.h */,
+				45E7EE771D03D3A2009E6C46 /* PicturePageVC.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -304,6 +309,7 @@
 			files = (
 				45E7EE5C1D031ECD009E6C46 /* ThumbnailListVC.m in Sources */,
 				45E7EE751D038C6B009E6C46 /* DetailVC.m in Sources */,
+				45E7EE781D03D3A2009E6C46 /* PicturePageVC.m in Sources */,
 				45E7EE661D033BDD009E6C46 /* Picture.m in Sources */,
 				45E7EE6B1D033CC9009E6C46 /* FlickrManager.m in Sources */,
 				45E7EE6F1D034871009E6C46 /* ThumbnailCell.m in Sources */,

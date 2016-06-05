@@ -60,10 +60,10 @@ static NSString* apiKey = @"d5c7df3552b89d13fe311eb42715b510";
 
 - (void)retrieveImageOfPicture:(Picture*)picture isThumbnail:(BOOL)isThumbnail completion:(void(^)(NSString* imageFilePath, NSError* error))completion {
     // Check is image exists in cache
-    NSURL* localImageFileURL = [self imageCacheFileUrlOfPicture:picture isThumbnai:isThumbnail];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:localImageFileURL.path]) {
+    NSString* filePath = [self getLocalCacheImageOfPicture:picture isThumbnail:isThumbnail];
+    if (filePath != nil) {
         // Return cache file
-        completion(localImageFileURL.path, nil);
+        completion(filePath, nil);
         return;
     }
     
@@ -93,6 +93,16 @@ static NSString* apiKey = @"d5c7df3552b89d13fe311eb42715b510";
         completion(filePath.path, nil);
     }];
     [downloadTask resume];
+}
+
+- (NSString*)getLocalCacheImageOfPicture:(Picture*)picture isThumbnail:(BOOL)isThumbnail {
+    NSURL* localImageFileURL = [self imageCacheFileUrlOfPicture:picture isThumbnai:isThumbnail];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:localImageFileURL.path]) {
+        // Return cache file
+        return localImageFileURL.path;
+    }
+    
+    return nil;
 }
 
 - (void)deleteAllCacheFile {

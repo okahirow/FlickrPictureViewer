@@ -27,6 +27,11 @@
 // If retreaving failed, completion will return error and image file path will be nil.
 - (void)retrieveImageOfPicture:(Picture*)picture isThumbnail:(BOOL)isThumbnail completion:(void(^)(NSString* imageFilePath, NSError* error))completion;
 
+
+// Return filePath if local cache exists.
+// If not exists, return nil.
+- (NSString*)getLocalCacheImageOfPicture:(Picture*)picture isThumbnail:(BOOL)isThumbnail;
+
 - (void)deleteAllCacheFile;
 
 @end
