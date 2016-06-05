@@ -58,7 +58,7 @@
 
 - (void)displayPicture:(Picture*)picture {
     // Display loading view
-    self.loadingView.hidden = NO;
+    [self displayLoadingView];
     
     // Display thumbnail
     [self displayThumbnailIfExists: self.targetPicture];
@@ -67,26 +67,26 @@
     [[FlickrManager sharedInstance] retrieveImageOfPicture:picture isThumbnail:NO completion:
      ^(NSString* imageFilePath, NSError* error) {
          if (error != nil) {
-             // failed.
-             // TODO: show error
+             // error
+             [self displayErrorView];
              return;
          }
          
          if (imageFilePath == nil) {
              // error
-             // TODO: show error
+             [self displayErrorView];
              return;
          }
          
          UIImage *image = [UIImage imageWithContentsOfFile:imageFilePath];
          if (image == nil) {
              // error
-             // TODO: show error
+             [self displayErrorView];
              return;
          }
          
-         self.imageView.image = image;
-         self.loadingView.hidden = YES;
+         // Success
+         [self displayImage:image];
      }];
 }
 
@@ -100,6 +100,33 @@
         return;
     }
     
+    self.imageView.image = image;
+    self.loadingView.hidden = YES;
+}
+
+- (void)displayLoadingView {
+    self.loadingView.hidden = NO;
+}
+
+- (void)displayErrorView {
+    // Reset zoom mode
+    [self.scrollView setZoomScale:1.0];
+    
+    self.imageView.image = nil;
+    self.loadingView.hidden = YES;
+    
+    UILabel* errorView = [[UILabel alloc] initWithFrame:self.view.bounds];
+    errorView.text = @"Cannot retrieve picture.";
+    errorView.textAlignment = NSTextAlignmentCenter;
+    
+    [self.scrollView addSubview:errorView];
+    self.scrollView.contentSize = errorView.bounds.size;
+    
+    // Disable zooming
+    self.scrollView.maximumZoomScale = 1.0;
+}
+
+- (void)displayImage:(UIImage*)image {
     self.imageView.image = image;
     self.loadingView.hidden = YES;
 }

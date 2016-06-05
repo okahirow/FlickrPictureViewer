@@ -12,7 +12,8 @@
 @interface ThumbnailCell ()
 
 @property (nonatomic, weak) IBOutlet UIImageView* imageView;
-@property (nonatomic, weak) IBOutlet UIView* defaultView;
+@property (nonatomic, weak) IBOutlet UIView* loadingView;
+@property (nonatomic, weak) IBOutlet UIView* errorView;
 
 @property Picture* displayTargetPicture;
 
@@ -35,42 +36,57 @@
     
     self.displayTargetPicture = picture;
     
-    // Set loading status
-    self.imageView.image = nil;
-    self.defaultView.hidden = NO;
+    [self displayLoadingView];
     
     // retrieve thumbnail
     [[FlickrManager sharedInstance] retrieveImageOfPicture:picture isThumbnail:YES completion:
     ^(NSString* imageFilePath, NSError* error) {
+        if ([picture isEqual:self.displayTargetPicture] == false) {
+            // Now this cell is displayed another picture.
+            // Nothing to do.
+            return;
+        }
+
         if (error != nil) {
-            // failed.
-            // TODO: show error
+            // error
+            [self displayErrorView];
             return;
         }
         
         if (imageFilePath == nil) {
             // error
-            // TODO: show error
-            return;
-        }
-        
-        if ([picture isEqual:self.displayTargetPicture] == false) {
-            // Now this cell is displayed another picture.
-            // Nothing to do.
+            [self displayErrorView];
             return;
         }
         
         UIImage *image = [UIImage imageWithContentsOfFile:imageFilePath];
         if (image == nil) {
             // error
-            // TODO: show error
+            [self displayErrorView];
             return;
         }
         
-        // Set loaded status
-        self.imageView.image = image;
-        self.defaultView.hidden = YES;
+        // Success
+        [self displayThumbnail:image];
     }];
+}
+
+- (void)displayLoadingView {
+    self.imageView.image = nil;
+    self.loadingView.hidden = NO;
+    self.errorView.hidden = YES;
+}
+
+- (void)displayErrorView {
+    self.imageView.image = nil;
+    self.loadingView.hidden = YES;
+    self.errorView.hidden = NO;
+}
+
+- (void)displayThumbnail:(UIImage*)image {
+    self.imageView.image = image;
+    self.loadingView.hidden = YES;
+    self.errorView.hidden = YES;
 }
 
 @end

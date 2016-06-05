@@ -94,9 +94,27 @@
                                     <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nbm-ks-yoF" userLabel="DefaultView">
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nbm-ks-yoF" userLabel="Loading View">
                                             <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                             <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hDO-P7-0EZ" userLabel="Error View">
+                                            <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cannot retrieve thumbnail" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cv8-vn-GxB">
+                                                    <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstItem="cv8-vn-GxB" firstAttribute="top" secondItem="hDO-P7-0EZ" secondAttribute="top" id="bZW-CO-m7m"/>
+                                                <constraint firstAttribute="trailing" secondItem="cv8-vn-GxB" secondAttribute="trailing" id="c9S-zL-7hU"/>
+                                                <constraint firstAttribute="bottom" secondItem="cv8-vn-GxB" secondAttribute="bottom" id="f7c-Yv-eAq"/>
+                                                <constraint firstItem="cv8-vn-GxB" firstAttribute="leading" secondItem="hDO-P7-0EZ" secondAttribute="leading" id="o28-No-En7"/>
+                                            </constraints>
                                         </view>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FNi-nn-OH5">
                                             <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
@@ -108,15 +126,20 @@
                                     <constraint firstAttribute="bottom" secondItem="nbm-ks-yoF" secondAttribute="bottom" id="0Bw-U0-WCf"/>
                                     <constraint firstItem="FNi-nn-OH5" firstAttribute="leading" secondItem="hVQ-hJ-2hM" secondAttribute="leading" id="AMJ-oM-txy"/>
                                     <constraint firstItem="FNi-nn-OH5" firstAttribute="top" secondItem="hVQ-hJ-2hM" secondAttribute="top" id="ANi-NC-0ua"/>
+                                    <constraint firstAttribute="bottom" secondItem="hDO-P7-0EZ" secondAttribute="bottom" id="CSX-0M-yVO"/>
                                     <constraint firstItem="nbm-ks-yoF" firstAttribute="top" secondItem="hVQ-hJ-2hM" secondAttribute="top" id="RFe-1a-HPp"/>
+                                    <constraint firstAttribute="trailing" secondItem="hDO-P7-0EZ" secondAttribute="trailing" id="RJq-36-sF3"/>
                                     <constraint firstAttribute="bottom" secondItem="FNi-nn-OH5" secondAttribute="bottom" id="V3w-Dv-2Mc"/>
                                     <constraint firstItem="nbm-ks-yoF" firstAttribute="leading" secondItem="hVQ-hJ-2hM" secondAttribute="leading" id="VAa-bu-dga"/>
+                                    <constraint firstItem="hDO-P7-0EZ" firstAttribute="top" secondItem="hVQ-hJ-2hM" secondAttribute="top" id="XAx-9X-OI4"/>
+                                    <constraint firstItem="hDO-P7-0EZ" firstAttribute="leading" secondItem="hVQ-hJ-2hM" secondAttribute="leading" id="kdw-YL-hnW"/>
                                     <constraint firstAttribute="trailing" secondItem="nbm-ks-yoF" secondAttribute="trailing" id="r97-Oz-YQv"/>
                                     <constraint firstAttribute="trailing" secondItem="FNi-nn-OH5" secondAttribute="trailing" id="y5K-mc-2bR"/>
                                 </constraints>
                                 <connections>
-                                    <outlet property="defaultView" destination="nbm-ks-yoF" id="f8E-a6-i5d"/>
+                                    <outlet property="errorView" destination="hDO-P7-0EZ" id="2fV-Hz-Nhc"/>
                                     <outlet property="imageView" destination="FNi-nn-OH5" id="dVN-O4-Y8H"/>
+                                    <outlet property="loadingView" destination="nbm-ks-yoF" id="1QF-so-Bvr"/>
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="LoadingCell" id="Idg-5e-fxb">

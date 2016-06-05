@@ -53,34 +53,20 @@
 - (void)retrievePictureList {
     [self.flickrManager retrievePictureListWithType:self.pictureListType count:50 completion:
     ^(NSArray* pictureList, NSError* error){
-        if (error != nil) {
-            // failed.
-            // TODO: show error
-            return;
-        }
-        
-        if (pictureList == nil) {
+        if (error != nil || pictureList == nil) {
             // error
-            // TODO: show error
-            return;
+            UIAlertController* dialog = [UIAlertController alertControllerWithTitle:@"Error" message:@"Cannot retrieve picture list." preferredStyle: UIAlertControllerStyleAlert];
+            [dialog addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+            [self presentViewController:dialog animated:YES completion:nil];
+            
+            self.pictureList = @[];
+        }
+        else {
+            self.pictureList = pictureList;
         }
         
-        if (pictureList.count == 0) {
-            // error
-            // TODO: show error
-        }
-        
-        self.pictureList = pictureList;
         [self.collectionView reloadData];
     }];
-}
-
-
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    
 }
 
 
@@ -133,34 +119,5 @@
         [self.navigationController pushViewController:detailVC animated:YES];
     }
 }
-
-/*
-// Uncomment this method to specify if the specified item should be highlighted during tracking
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
-	return YES;
-}
-*/
-
-/*
-// Uncomment this method to specify if the specified item should be selected
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
-}
-*/
-
-/*
-// Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath {
-	return NO;
-}
-
-- (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-	return NO;
-}
-
-- (void)collectionView:(UICollectionView *)collectionView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-	
-}
-*/
 
 @end

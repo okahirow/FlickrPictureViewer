@@ -32,6 +32,7 @@
 // If not exists, return nil.
 - (NSString*)getLocalCacheImageOfPicture:(Picture*)picture isThumbnail:(BOOL)isThumbnail;
 
+// Delete all cached thumbnails and pictures in ~/Library/Cache/
 - (void)deleteAllCacheFile;
 
 @end
