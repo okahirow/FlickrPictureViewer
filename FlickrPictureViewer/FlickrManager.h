@@ -16,15 +16,15 @@
 
 // Retrieve picture list from Flicker.
 // Specified count of pictures will be retrieved.
-// If retreaving succeeded, completion will return pictureList as array of Picture object.
-// If retreaving failed, completion will return error and pictureList will be nil.
+// If retrieving succeeded, completion will return pictureList as array of Picture object.
+// If retrieving failed, completion will return error and pictureList will be nil.
 // completion will be called in UI thread.
 - (void)retrievePictureListWithType:(PictureListType)type count:(NSUInteger)count completion:(void(^)(NSArray* pictureList, NSError* error))completion;
 
 // Retrieve thumbnail image from Flicker.
 // If cached image exists, it will be returned without retrieving from Flickr.
-// If retreaving succeeded, completion will return UIImage object.
-// If retreaving failed, completion will return error and image will be nil.
+// If retrieving succeeded, completion will return UIImage object.
+// If retrieving failed, completion will return error and image will be nil.
 // completion will be called in UI thread.
 - (void)retrieveImageOfPicture:(Picture*)picture forThumbnail:(BOOL)forThumbnail completion:(void(^)(UIImage* image, NSError* error))completion;
 
