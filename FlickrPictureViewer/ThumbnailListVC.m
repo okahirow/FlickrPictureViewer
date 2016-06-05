@@ -105,6 +105,10 @@
     else {
         // thumbnail cell
         ThumbnailCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ThumbnailCell" forIndexPath:indexPath];
+        
+        cell.layer.shouldRasterize = YES;
+        cell.layer.rasterizationScale = [UIScreen mainScreen].scale;
+        
         Picture* picture = self.pictureList[indexPath.row];
         [cell displayPicture:picture];
         return cell;

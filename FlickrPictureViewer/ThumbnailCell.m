@@ -38,37 +38,53 @@
     
     [self displayLoadingView];
     
-    // retrieve thumbnail
-    [[FlickrManager sharedInstance] retrieveImageOfPicture:picture isThumbnail:YES completion:
-    ^(NSString* imageFilePath, NSError* error) {
-        if ([picture isEqual:self.displayTargetPicture] == false) {
-            // Now this cell is displayed another picture.
-            // Nothing to do.
-            return;
-        }
-
-        if (error != nil) {
-            // error
-            [self displayErrorView];
-            return;
-        }
-        
-        if (imageFilePath == nil) {
-            // error
-            [self displayErrorView];
-            return;
-        }
-        
-        UIImage *image = [UIImage imageWithContentsOfFile:imageFilePath];
-        if (image == nil) {
-            // error
-            [self displayErrorView];
-            return;
-        }
-        
-        // Success
-        [self displayThumbnail:image];
-    }];
+    // Retrieve thumbnail in background thread
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        // Retrieve thumbnail
+        [[FlickrManager sharedInstance] retrieveImageOfPicture:picture isThumbnail:YES completion:
+         ^(NSString* imageFilePath, NSError* error) {
+             // this block will be executed in background thread. (not main thread)
+             
+             if ([picture isEqual:self.displayTargetPicture] == false) {
+                 // Now this cell is displayed another picture.
+                 // Nothing to do.
+                 return;
+             }
+             
+             if (error != nil || imageFilePath == nil) {
+                 // error
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     // Do in UI thread
+                     [self displayErrorView];
+                 });
+                 
+                 return;
+             }
+             
+             // Load image data in background thread.
+             NSData* imageData = [NSData dataWithContentsOfFile:imageFilePath];
+             
+             
+             dispatch_async(dispatch_get_main_queue(), ^{
+                 if ([picture isEqual:self.displayTargetPicture] == false) {
+                     // Now this cell is displayed another picture.
+                     // Nothing to do.
+                     return;
+                 }
+                 
+                 UIImage* image = [UIImage imageWithData:imageData];
+                 if (image == nil) {
+                     // error
+                     [self displayErrorView];
+                     return;
+                 }
+                 else {
+                     // Success
+                     [self displayThumbnail:image];
+                 }
+             });
+         }];
+    });
 }
 
 - (void)displayLoadingView {

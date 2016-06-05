@@ -66,27 +66,28 @@
     // Retrieve full size picture
     [[FlickrManager sharedInstance] retrieveImageOfPicture:picture isThumbnail:NO completion:
      ^(NSString* imageFilePath, NSError* error) {
-         if (error != nil) {
-             // error
-             [self displayErrorView];
+         // this block will be executed in background thread. (not main thread)
+         
+         if (error != nil || imageFilePath == nil) {
+             // Update cell in UI thread
+             dispatch_async(dispatch_get_main_queue(), ^{
+                 [self displayErrorView];
+             });
              return;
          }
          
-         if (imageFilePath == nil) {
-             // error
-             [self displayErrorView];
-             return;
-         }
-         
-         UIImage *image = [UIImage imageWithContentsOfFile:imageFilePath];
-         if (image == nil) {
-             // error
-             [self displayErrorView];
-             return;
-         }
-         
-         // Success
-         [self displayImage:image];
+         // Update image in UI thread
+         dispatch_async(dispatch_get_main_queue(), ^{
+             UIImage *image = [UIImage imageWithContentsOfFile:imageFilePath];
+             if (image == nil) {
+                 // error
+                 [self displayErrorView];
+                 return;
+             }
+             
+             // Success
+             [self displayImage:image];
+         });
      }];
 }
 
