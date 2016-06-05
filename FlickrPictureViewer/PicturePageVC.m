@@ -60,49 +60,35 @@
     // Display loading view
     [self displayLoadingView];
     
-    // Display thumbnail
+    // Display thumbnail if exists
     [self displayThumbnailIfExists: self.targetPicture];
     
     // Retrieve full size picture
-    [[FlickrManager sharedInstance] retrieveImageOfPicture:picture isThumbnail:NO completion:
-     ^(NSString* imageFilePath, NSError* error) {
-         // this block will be executed in background thread. (not main thread)
+    [[FlickrManager sharedInstance] retrieveImageOfPicture:picture forThumbnail:NO completion:
+     ^(UIImage* image, NSError* error) {
+         // this block will be called in main thread.
          
-         if (error != nil || imageFilePath == nil) {
-             // Update cell in UI thread
-             dispatch_async(dispatch_get_main_queue(), ^{
-                 [self displayErrorView];
-             });
+         if (error != nil || image == nil) {
+             // error
+             [self displayErrorView];
              return;
          }
          
-         // Update image in UI thread
-         dispatch_async(dispatch_get_main_queue(), ^{
-             UIImage *image = [UIImage imageWithContentsOfFile:imageFilePath];
-             if (image == nil) {
-                 // error
-                 [self displayErrorView];
-                 return;
-             }
-             
-             // Success
-             [self displayImage:image];
-         });
+         // Success
+         [self displayImage:image];
      }];
 }
 
 - (void)displayThumbnailIfExists:(Picture*)picture {
     // Get local thumbnail cache
-    NSString* thumbnailFilePath = [[FlickrManager sharedInstance] getLocalCacheImageOfPicture:picture isThumbnail:YES];
-    UIImage *image = [UIImage imageWithContentsOfFile:thumbnailFilePath];
+    UIImage *image = [[FlickrManager sharedInstance] getCacheImageOfPicture:picture forThumbnail:YES];
     if (image == nil) {
         // No thumbnail cache.
         // Do nothing.
         return;
     }
     
-    self.imageView.image = image;
-    self.loadingView.hidden = YES;
+    [self displayImage:image];
 }
 
 - (void)displayLoadingView {
@@ -116,10 +102,12 @@
     self.imageView.image = nil;
     self.loadingView.hidden = YES;
     
+    // create error view
     UILabel* errorView = [[UILabel alloc] initWithFrame:self.view.bounds];
     errorView.text = @"Cannot retrieve picture.";
     errorView.textAlignment = NSTextAlignmentCenter;
     
+    // display error view
     [self.scrollView addSubview:errorView];
     self.scrollView.contentSize = errorView.bounds.size;
     

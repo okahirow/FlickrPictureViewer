@@ -18,19 +18,20 @@
 // Specified count of pictures will be retrieved.
 // If retreaving succeeded, completion will return pictureList as array of Picture object.
 // If retreaving failed, completion will return error and pictureList will be nil.
+// completion will be called in UI thread.
 - (void)retrievePictureListWithType:(PictureListType)type count:(NSUInteger)count completion:(void(^)(NSArray* pictureList, NSError* error))completion;
 
-
 // Retrieve thumbnail image from Flicker.
-// If cached image exists in local, it will be returned without retrieving from Flickr.
-// If retreaving succeeded, completion will return image file path.
-// If retreaving failed, completion will return error and image file path will be nil.
-- (void)retrieveImageOfPicture:(Picture*)picture isThumbnail:(BOOL)isThumbnail completion:(void(^)(NSString* imageFilePath, NSError* error))completion;
+// If cached image exists, it will be returned without retrieving from Flickr.
+// If retreaving succeeded, completion will return UIImage object.
+// If retreaving failed, completion will return error and image will be nil.
+// completion will be called in UI thread.
+- (void)retrieveImageOfPicture:(Picture*)picture forThumbnail:(BOOL)forThumbnail completion:(void(^)(UIImage* image, NSError* error))completion;
 
-
-// Return filePath if local cache exists.
+// Return UIImage object if cache exists.
 // If not exists, return nil.
-- (NSString*)getLocalCacheImageOfPicture:(Picture*)picture isThumbnail:(BOOL)isThumbnail;
+// This method must be called in UI thread.
+- (UIImage*)getCacheImageOfPicture:(Picture*)picture forThumbnail:(BOOL)forThumbnail;
 
 // Delete all cached thumbnails and pictures in ~/Library/Cache/
 - (void)deleteAllCacheFile;

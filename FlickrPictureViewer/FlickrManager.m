@@ -14,6 +14,8 @@ static NSString* apiKey = @"d5c7df3552b89d13fe311eb42715b510";
 
 @implementation FlickrManager
 
+#pragma mark public methods
+
 + (instancetype)sharedInstance {
     static id sharedInstance = nil;
     static dispatch_once_t onceToken;
@@ -58,52 +60,72 @@ static NSString* apiKey = @"d5c7df3552b89d13fe311eb42715b510";
     }];
 }
 
-- (void)retrieveImageOfPicture:(Picture*)picture isThumbnail:(BOOL)isThumbnail completion:(void(^)(NSString* imageFilePath, NSError* error))completion {
-    // Check is image exists in cache
-    NSString* filePath = [self getLocalCacheImageOfPicture:picture isThumbnail:isThumbnail];
-    if (filePath != nil) {
-        // Return cache file
-        completion(filePath, nil);
-        return;
-    }
-    
-    // Request image to server.
-    NSString* thumbnailTypeString = isThumbnail ? @"_t_d" : @"";
-    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"http://farm%@.staticflickr.com/%@/%@_%@%@.jpg", picture.farm, picture.server, picture.pictureId, picture.secret, thumbnailTypeString]];
-    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
-    
-    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
-    manager.completionQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0);
-    
-    NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
-        return [self imageCacheFileUrlOfPicture:picture isThumbnai:isThumbnail];
-    } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
-        if (error != nil) {
-            completion(nil, error);
+- (void)retrieveImageOfPicture:(Picture*)picture forThumbnail:(BOOL)forThumbnail completion:(void(^)(UIImage* image, NSError* error))completion {
+    // Retrieve thumbnail in background thread for performance
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        
+        // Check cache exists
+        NSURL* cacheImageFileURL = [self imageCacheFileUrlOfPicture:picture isThumbnai:forThumbnail];
+        NSData* imageData = [NSData dataWithContentsOfFile:cacheImageFileURL.path];
+        if (imageData != nil) {
+            // Return cache image in UI thread.
+            dispatch_async(dispatch_get_main_queue(), ^{
+                UIImage* image = [UIImage imageWithData:imageData];
+                completion(image, nil);
+            });
             return;
         }
         
-        if (filePath == nil) {
-            //error
-            completion(nil, nil);
-            return;
-        }
+        // Request image to server and save retrieved image into cache.
+        NSString* thumbnailTypeString = forThumbnail ? @"_t_d" : @"";
+        NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"http://farm%@.staticflickr.com/%@/%@_%@%@.jpg", picture.farm, picture.server, picture.pictureId, picture.secret, thumbnailTypeString]];
+        NSURLRequest *request = [NSURLRequest requestWithURL:URL];
         
-        NSLog(@"File downloaded to: %@", filePath.path);
-        completion(filePath.path, nil);
-    }];
-    [downloadTask resume];
+        NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+        AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
+        manager.completionQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0);
+        
+        NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:nil
+        destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
+            // set download path
+            return [self imageCacheFileUrlOfPicture:picture isThumbnai:forThumbnail];
+        }
+        completionHandler:^(NSURLResponse *response, NSURL *fileUrl, NSError *error) {
+            // this block will be called in background thread.
+            
+            if (error != nil || fileUrl == nil) {
+                // return in UI thread.
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    completion(nil, error);
+                });
+                return;
+            }
+            
+            NSData* imageData = [NSData dataWithContentsOfFile:fileUrl.path];
+            if (imageData == nil) {
+                // error
+                // return in UI thread.
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    completion(nil, nil);
+                });
+                return;
+            }
+            
+            NSLog(@"File downloaded to: %@", fileUrl.path);
+            
+            // return in UI thread.
+            dispatch_async(dispatch_get_main_queue(), ^{
+                UIImage* image = [UIImage imageWithData:imageData];
+                completion(image, nil);
+            });
+        }];
+        [downloadTask resume];
+    });
 }
 
-- (NSString*)getLocalCacheImageOfPicture:(Picture*)picture isThumbnail:(BOOL)isThumbnail {
-    NSURL* localImageFileURL = [self imageCacheFileUrlOfPicture:picture isThumbnai:isThumbnail];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:localImageFileURL.path]) {
-        // Return cache file
-        return localImageFileURL.path;
-    }
-    
-    return nil;
+- (UIImage*)getCacheImageOfPicture:(Picture*)picture forThumbnail:(BOOL)forThumbnail {
+    NSURL* localImageFileURL = [self imageCacheFileUrlOfPicture:picture isThumbnai:forThumbnail];
+    return [UIImage imageWithContentsOfFile:localImageFileURL.path];
 }
 
 - (void)deleteAllCacheFile {
@@ -115,6 +137,9 @@ static NSString* apiKey = @"d5c7df3552b89d13fe311eb42715b510";
     NSURL* pictureCacheDir = [self imageCacheDirUrlWithIsThumbnail:YES];
     [[NSFileManager defaultManager] removeItemAtPath:pictureCacheDir.path error:nil];
 }
+
+
+#pragma mark private methods
 
 - (NSURL*)imageCacheFileUrlOfPicture:(Picture*)picture isThumbnai:(BOOL)isThumbnail {
     NSURL* imageCacheDirUrl = [self imageCacheDirUrlWithIsThumbnail:isThumbnail];
